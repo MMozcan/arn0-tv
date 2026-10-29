@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- Source of src/img/wallpapers/duo-night.jpg (rendered by scripts/make-duo-wallpaper.sh).
+     A night landscape: deep blue sky, a pink horizon glow, layered mountain ridges. Everything
+     is drawn here once and baked into a JPEG, so the TV never composites a gradient. -->
+<html>
+<body style="margin:0;width:1920px;height:1080px;background:#050a24;">
+<svg id="art" width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#040820"/>
+            <stop offset="0.34" stop-color="#0b1a52"/>
+            <stop offset="0.52" stop-color="#26388a"/>
+            <stop offset="0.62" stop-color="#6a56a8"/>
+            <stop offset="0.69" stop-color="#d47d9e"/>
+            <stop offset="0.74" stop-color="#f7b4a4"/>
+        </linearGradient>
+        <radialGradient id="glow" cx="0.6" cy="0.7" r="0.5">
+            <stop offset="0" stop-color="#ffb3a6" stop-opacity="0.55"/>
+            <stop offset="0.5" stop-color="#c0679a" stop-opacity="0.18"/>
+            <stop offset="1" stop-color="#c0679a" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Readability: the clock sits top-left, the tiles and labels lower down. -->
+        <radialGradient id="scrim-clock" cx="0" cy="0" r="1" gradientTransform="scale(0.7 0.6)">
+            <stop offset="0" stop-color="#000" stop-opacity="0.5"/>
+            <stop offset="1" stop-color="#000" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="scrim-low" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0.25" stop-color="#000" stop-opacity="0"/>
+            <stop offset="0.6" stop-color="#000" stop-opacity="0.22"/>
+            <stop offset="1" stop-color="#000" stop-opacity="0.55"/>
+        </linearGradient>
+    </defs>
+    <rect width="1920" height="1080" fill="url(#sky)"/>
+    <g id="stars"></g>
+    <rect width="1920" height="1080" fill="url(#glow)"/>
+    <g id="ridges"></g>
+    <rect width="1920" height="1080" fill="url(#scrim-clock)"/>
+    <rect width="1920" height="1080" fill="url(#scrim-low)"/>
+</svg>
+<script>
+    // Seeded so every render of this file gives the same picture.
+    let seed = 1856;
+    function rand() {
+        seed = (seed * 16807) % 2147483647;
+        return (seed - 1) / 2147483646;
+    }
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const stars = document.getElementById('stars');
+    for (let i = 0; i < 260; i++) {
+        const y = Math.pow(rand(), 1.6) * 640;
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', (rand() * 1920).toFixed(1));
+        c.setAttribute('cy', y.toFixed(1));
+        c.setAttribute('r', (rand() < 0.08 ? 1.6 : 0.5 + rand() * 0.8).toFixed(2));
+        c.setAttribute('fill', '#fff');
+        // Fainter towards the horizon, where the glow takes over.
+        c.setAttribute('opacity', ((0.25 + rand() * 0.6) * (1 - y / 900)).toFixed(2));
+        stars.appendChild(c);
+    }
+
+    // Midpoint displacement, then a smooth curve through the points.
+    function ridge(base, rough, span) {
+        let pts = [base + (rand() - 0.5) * span, base + (rand() - 0.5) * span];
+        let amp = span;
+        for (let pass = 0; pass < 7; pass++) {
+            const next = [];
+            for (let i = 0; i < pts.length - 1; i++) {
+                next.push(pts[i], (pts[i] + pts[i + 1]) / 2 + (rand() - 0.5) * amp);
+            }
+            next.push(pts[pts.length - 1]);
+            pts = next;
+            amp *= rough;
+        }
+        const step = 1920 / (pts.length - 1);
+        let d = 'M0,1080 L0,' + pts[0].toFixed(1);
+        for (let i = 1; i < pts.length; i++) {
+            const x0 = (i - 1) * step, x1 = i * step;
+            d += ' C' + (x0 + step / 2).toFixed(1) + ',' + pts[i - 1].toFixed(1) + ' ' +
+                (x1 - step / 2).toFixed(1) + ',' + pts[i].toFixed(1) + ' ' + x1.toFixed(1) + ',' + pts[i].toFixed(1);
+        }
+        return d + ' L1920,1080 Z';
+    }
+
+    // Back to front: hazy and pink-lit far away, near-black navy up close.
+    const layers = [
+        { base: 790, rough: 0.6, span: 300, fill: '#b9739a' },
+        { base: 840, rough: 0.58, span: 280, fill: '#7a4f8e' },
+        { base: 900, rough: 0.55, span: 240, fill: '#3e2f6c' },
+        { base: 960, rough: 0.52, span: 200, fill: '#1a1840' },
+        { base: 1030, rough: 0.5, span: 150, fill: '#080a1d' }
+    ];
+    const ridges = document.getElementById('ridges');
+    layers.forEach(function (l) {
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', ridge(l.base, l.rough, l.span));
+        p.setAttribute('fill', l.fill);
+        ridges.appendChild(p);
+    });
+</script>
+</body>
+</html>

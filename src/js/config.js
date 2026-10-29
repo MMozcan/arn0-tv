@@ -38,7 +38,7 @@ window.LAUNCHER_CONFIG = {
     theme: {
         // Starting wallpaper (key from js/wallpapers.js), or null for none (plain gradient).
         // Changed from Settings → Background; the TV remembers the choice.
-        wallpaper: null
+        wallpaper: 'duo-night'
     },
 
     /*
