@@ -142,7 +142,8 @@ h1, h2 {
  * lit top edge and the lift. No gradients, no animation; the panel only changes text.
  */
 :root {
-    --glass-fill: rgba(255, 255, 255, 0.08);
+    /* Navy-tinted rather than white, so white text holds up on light wallpapers like duo-day. */
+    --glass-fill: rgba(12, 28, 58, 0.24);
     --glass-edge: rgba(255, 255, 255, 0.18);
     --glass-shine: rgba(255, 255, 255, 0.28);
     --glass-lift: rgba(0, 0, 0, 0.32);
@@ -252,7 +253,7 @@ h1, h2 {
 
 /* Past times step back without opacity, which would give each card its own layer. */
 .prayer-cell.past {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(12, 28, 58, 0.14);
     border-color: rgba(255, 255, 255, 0.08);
     box-shadow: none;
 }
@@ -329,7 +330,9 @@ h1, h2 {
     margin-top: 18px;
     font-size: 26px;
     font-weight: 500;
-    color: var(--faint);
+    /* Brighter than --faint, with a static shadow, so names read over light wallpapers too. */
+    color: rgba(244, 245, 247, 0.78);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
