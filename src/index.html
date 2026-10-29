@@ -15,10 +15,6 @@
                 <div id="time"><span id="time-main"></span><span id="time-suffix"></span></div>
                 <div id="date"></div>
             </header>
-            <div id="prayer" class="prayer hidden">
-                <div id="prayer-next" class="prayer-next"></div>
-                <div id="prayer-row" class="prayer-row"></div>
-            </div>
             <div id="gear" class="gear">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="3.2"/>
@@ -32,6 +28,19 @@
             <div id="inputs-section" class="shelf">
                 <h2>Consoles</h2>
                 <div class="row-viewport"><div id="inputs-row" class="row-track"></div></div>
+            </div>
+            <!-- Namaz vakitleri: a bento of glass cards where the consoles row used to be. -->
+            <div id="prayer" class="prayer hidden">
+                <div class="glass prayer-hero">
+                    <div class="prayer-kicker">Sıradaki vakit</div>
+                    <div id="prayer-hero-name" class="prayer-hero-name"></div>
+                    <div class="prayer-hero-line">
+                        <span id="prayer-hero-time" class="prayer-hero-time"></span>
+                        <span id="prayer-hero-left" class="prayer-hero-left"></span>
+                    </div>
+                    <div id="prayer-meta" class="prayer-meta"></div>
+                </div>
+                <div id="prayer-row" class="prayer-row"></div>
             </div>
         </section>
 

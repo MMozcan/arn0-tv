@@ -339,14 +339,20 @@
         var p = Prayer.current();
         $('prayer').classList.toggle('hidden', !p);
         if (!p) return;
-        $('prayer-next').textContent = p.next
-            ? p.next.label + ' vaktine ' + p.next.remaining + (p.region ? ' · ' + p.region : '')
-            : p.region;
-        $('prayer-row').innerHTML = p.rows.map(function (r) {
-            return '<div class="prayer-cell' + (r.next ? ' next' : '') + (r.past ? ' past' : '') + '">' +
+        $('prayer-hero-name').textContent = p.next ? p.next.label : '–';
+        $('prayer-hero-time').textContent = p.next ? p.next.time : '';
+        $('prayer-hero-left').textContent = p.next ? p.next.remaining + ' kaldı' : '';
+        $('prayer-meta').textContent = [p.region, p.hijri].filter(Boolean).join(' · ');
+        // Only rebuilt when a time or the highlighted prayer changes, not on every tick.
+        var html = p.rows.map(function (r) {
+            return '<div class="glass prayer-cell' + (r.next ? ' next' : '') + (r.past ? ' past' : '') + '">' +
                 '<div class="prayer-label">' + r.label + '</div>' +
                 '<div class="prayer-time">' + r.time + '</div></div>';
         }).join('');
+        if (html !== state.prayerHtml) {
+            state.prayerHtml = html;
+            $('prayer-row').innerHTML = html;
+        }
     }
 
     // The TV takes ~4 s to list its ~450 apps, so Home is drawn from the last list we saw

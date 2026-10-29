@@ -23,11 +23,9 @@ window.LAUNCHER_CONFIG = {
         { id: 'com.samsung.tv.aria-video', label: 'Apple TV' }
     ],
 
-    inputs: [
-        { hdmi: 1, label: 'Nintendo Switch 2', brand: 'switch' },
-        { hdmi: 2, label: 'PlayStation 5', brand: 'playstation' },
-        { hdmi: 4, label: 'Xbox Series X', brand: 'xbox' }
-    ],
+    // Empty: the prayer times take the consoles' place on Home. Consoles can still be added
+    // from Settings → Consoles, which brings the row back.
+    inputs: [],
 
     // How an input tile switches the TV. See README "HDMI inputs".
     //   'switch+viewer'  set the TV source, then open Samsung's TV viewer (default)

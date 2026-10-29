@@ -132,57 +132,143 @@ h1, h2 {
     color: var(--muted);
 }
 
-/* Namaz vakitleri: top right, between the clock and the gear. */
-.prayer {
-    position: absolute;
-    top: 96px;
-    right: 260px;
-    text-align: right;
+/*
+ * Namaz vakitleri: a bento of glass cards centred under the apps, where the consoles were.
+ *
+ * Liquid glass without the expensive part. Real glass is backdrop-filter: blur, and nothing on
+ * this stage has measured it (see the header); on an entry-level TV a blur re-sampling the
+ * wallpaper behind seven cards is the first thing to drop frames. So the glass is faked with
+ * what is known to be free here: a translucent fill, a hairline border, and box-shadows for the
+ * lit top edge and the lift. No gradients, no animation; the panel only changes text.
+ */
+:root {
+    --glass-fill: rgba(255, 255, 255, 0.08);
+    --glass-edge: rgba(255, 255, 255, 0.18);
+    --glass-shine: rgba(255, 255, 255, 0.28);
+    --glass-lift: rgba(0, 0, 0, 0.32);
+    --accent: #1856ff;
+    --accent-fill: rgba(24, 86, 255, 0.34);
+    --accent-edge: rgba(130, 165, 255, 0.7);
 }
 
-.prayer-next {
-    margin-bottom: 18px;
-    font-size: 28px;
-    font-weight: 500;
-    color: var(--muted);
+.glass {
+    background: var(--glass-fill);
+    border: 1px solid var(--glass-edge);
+    border-radius: 28px;
+    box-shadow: inset 0 1px 0 var(--glass-shine), 0 24px 60px var(--glass-lift);
+}
+
+.prayer {
+    position: absolute;
+    top: 700px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.prayer-hero {
+    width: 430px;
+    height: 220px;
+    padding: 26px 30px;
+    box-sizing: border-box;
+    background: var(--accent-fill);
+    border-color: var(--accent-edge);
+}
+
+.prayer-kicker {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(244, 245, 247, 0.8);
+}
+
+.prayer-hero-name {
+    margin-top: 10px;
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.prayer-hero-line {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.prayer-hero-time {
+    font-size: 36px;
+    font-weight: 400;
+}
+
+.prayer-hero-left {
+    padding: 4px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--accent);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.prayer-meta {
+    margin-top: 14px;
+    font-size: 20px;
+    color: rgba(244, 245, 247, 0.75);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .prayer-row {
     display: flex;
-    gap: 8px;
+    gap: 16px;
 }
 
 .prayer-cell {
-    min-width: 118px;
-    padding: 12px 14px;
-    border-radius: 16px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 160px;
+    height: 220px;
+    padding: 26px 22px;
+    box-sizing: border-box;
 }
 
 .prayer-label {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--muted);
+    color: rgba(244, 245, 247, 0.78);
 }
 
 .prayer-time {
-    margin-top: 6px;
-    font-size: 38px;
-    font-weight: 400;
+    font-size: 44px;
+    font-weight: 300;
     line-height: 1;
-}
-
-.prayer-cell.past .prayer-time { color: var(--faint); }
-
-.prayer-cell.next {
-    background: rgba(244, 245, 247, 0.14);
-}
-
-.prayer-cell.next .prayer-label,
-.prayer-cell.next .prayer-time {
     color: var(--fg);
 }
+
+/* Past times step back without opacity, which would give each card its own layer. */
+.prayer-cell.past {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+}
+
+.prayer-cell.past .prayer-label,
+.prayer-cell.past .prayer-time {
+    color: rgba(244, 245, 247, 0.45);
+}
+
+.prayer-cell.next {
+    border: 2px solid var(--accent-edge);
+    box-shadow: inset 0 1px 0 var(--glass-shine), 0 0 0 4px rgba(24, 86, 255, 0.35), 0 24px 60px var(--glass-lift);
+}
+
+.prayer-cell.next .prayer-label { color: var(--fg); }
+.prayer-cell.next .prayer-time { font-weight: 500; }
 
 /* Appearance options */
 .no-date #date { display: none; }
