@@ -207,6 +207,15 @@
         lastClockText = text;
         $('ss-time').textContent = text;
         $('ss-date').textContent = Prefs.get().appearance.showDate ? shortDate(d) : '';
+        renderPrayer();
+    }
+
+    // The countdown is in minutes, so the minute turn above is also when it needs a repaint.
+    function renderPrayer() {
+        var p = window.Prayer && Prayer.current();
+        var next = p && p.next;
+        $('ss-prayer').classList.toggle('hidden', !next);
+        if (next) $('ss-prayer').textContent = next.label + ' ' + next.time + ' · ' + next.remaining;
     }
 
     function caption(w) {
@@ -354,6 +363,11 @@
         if (window.Weather) {
             Weather.onUpdate(function () {
                 if (open) renderWeather();
+            });
+        }
+        if (window.Prayer) {
+            Prayer.onUpdate(function () {
+                if (open) renderPrayer();
             });
         }
         UI.register('screensaver', {

@@ -132,6 +132,58 @@ h1, h2 {
     color: var(--muted);
 }
 
+/* Namaz vakitleri: top right, between the clock and the gear. */
+.prayer {
+    position: absolute;
+    top: 96px;
+    right: 260px;
+    text-align: right;
+}
+
+.prayer-next {
+    margin-bottom: 18px;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+.prayer-row {
+    display: flex;
+    gap: 8px;
+}
+
+.prayer-cell {
+    min-width: 118px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.prayer-label {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+
+.prayer-time {
+    margin-top: 6px;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.prayer-cell.past .prayer-time { color: var(--faint); }
+
+.prayer-cell.next {
+    background: rgba(244, 245, 247, 0.14);
+}
+
+.prayer-cell.next .prayer-label,
+.prayer-cell.next .prayer-time {
+    color: var(--fg);
+}
+
 /* Appearance options */
 .no-date #date { display: none; }
 .names-never .app .label,
@@ -975,6 +1027,12 @@ html.preview, html.preview body {
     margin-top: 10px;
     font-size: 30px;
     color: rgba(220, 224, 232, 0.75);
+}
+
+.ss-prayer {
+    margin-top: 8px;
+    font-size: 26px;
+    color: rgba(220, 224, 232, 0.6);
 }
 
 .ss-weather {

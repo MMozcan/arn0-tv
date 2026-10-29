@@ -59,6 +59,16 @@ window.LAUNCHER_CONFIG = {
     },
 
     /*
+     * Namaz vakitleri on Home and in the screen saver, from Fazilet Takvimi. districtId is
+     * Fazilet's id for the city; leave it null and the widget never appears. Dutch cities:
+     * https://fazilettakvimi.com/api/cms/cities-by-country?districtId=40 (Rotterdam is 570,
+     * Amsterdam 557, Den Haag 561, Utrecht 572).
+     */
+    prayer: {
+        districtId: null
+    },
+
+    /*
      * EXPERIMENTAL navigation sound. Synthesised, so there is no audio file. `move` plays when
      * focus changes, `edge` when it cannot (the end of a row). Tune by ear in the browser
      * preview; `volume` is 0–1 and sits on top of the TV's own volume.

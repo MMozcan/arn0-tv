@@ -215,6 +215,7 @@
         ];
         if (window.Sound) actions = actions.concat(Sound.actions());
         if (window.Weather) actions = actions.concat(Weather.actions());
+        if (window.Prayer) actions = actions.concat(Prayer.actions());
         if (window.RenderProbe) actions = actions.concat(RenderProbe.actions());
         if (window.PlatformProbe) actions = actions.concat(PlatformProbe.actions());
         inputs().forEach(function (input) {
@@ -328,6 +329,24 @@
         $('time-main').textContent = t.time;
         $('time-suffix').textContent = t.suffix;
         $('date').textContent = Appearance.date(d);
+        renderPrayer();
+    }
+
+    // Rides on the clock's ten-second tick, which is also what keeps the countdown current.
+    function renderPrayer() {
+        if (!window.Prayer) return;
+        Prayer.refresh();
+        var p = Prayer.current();
+        $('prayer').classList.toggle('hidden', !p);
+        if (!p) return;
+        $('prayer-next').textContent = p.next
+            ? p.next.label + ' vaktine ' + p.next.remaining + (p.region ? ' · ' + p.region : '')
+            : p.region;
+        $('prayer-row').innerHTML = p.rows.map(function (r) {
+            return '<div class="prayer-cell' + (r.next ? ' next' : '') + (r.past ? ' past' : '') + '">' +
+                '<div class="prayer-label">' + r.label + '</div>' +
+                '<div class="prayer-time">' + r.time + '</div></div>';
+        }).join('');
     }
 
     // The TV takes ~4 s to list its ~450 apps, so Home is drawn from the last list we saw
@@ -456,6 +475,7 @@
             return false;
         });
         Appearance.apply();
+        if (window.Prayer) Prayer.onUpdate(renderPrayer);
         updateClock();
         setInterval(updateClock, 10000);
         renderLab();

@@ -15,7 +15,8 @@
     <tizen:privilege name="http://tizen.org/privilege/application.info"/>
     <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
     <tizen:privilege name="http://tizen.org/privilege/tv.window"/>
-    <!-- Open-Meteo request for the screen saver (js/config.js → weather) and the development log -->
+    <!-- Open-Meteo request for the screen saver (js/config.js → weather), Fazilet Takvimi prayer
+         times (js/config.js → prayer) and the development log -->
     <tizen:privilege name="http://tizen.org/privilege/internet"/>
     <access origin="*" subdomains="true"/>
 

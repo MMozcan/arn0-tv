@@ -10,6 +10,9 @@ window.LAUNCHER_LOCAL = {
     // Open-Meteo needs coordinates; two decimals is about a kilometre, which is finer than its grid.
     // weather: { latitude: 20, longitude: 2 },
 
+    // Fazilet Takvimi city id for the prayer times; see the prayer block in config.js.
+    // prayer: { districtId: 570 },
+
     // Receives Lab logs; see scripts/devlog-server.mjs.
     // devLogUrl: null,
 

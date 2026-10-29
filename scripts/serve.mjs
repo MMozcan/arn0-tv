@@ -26,8 +26,27 @@ const types = {
     '.xml': 'application/xml'
 };
 
+// The Fazilet backend sends no CORS headers, so the browser cannot call it directly; on the TV
+// the widget's <access origin="*"> covers it. js/prayer.js uses this path in the preview.
+const FAZILET = 'https://backend.fazilettakvimi.com/content/public';
+
+async function proxyFazilet(url, res) {
+    try {
+        const upstream = await fetch(FAZILET + url.pathname.slice('/fazilet'.length) + url.search);
+        res.writeHead(upstream.status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+        res.end(Buffer.from(await upstream.arrayBuffer()));
+    } catch {
+        res.writeHead(502).end();
+    }
+}
+
 createServer(async (req, res) => {
-    const path = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+    const url = new URL(req.url, 'http://x');
+    if (url.pathname.startsWith('/fazilet/')) {
+        await proxyFazilet(url, res);
+        return;
+    }
+    const path = decodeURIComponent(url.pathname);
     const file = normalize(join(root, path === '/' ? 'index.html' : path));
     if (!file.startsWith(root)) {
         res.writeHead(403).end();

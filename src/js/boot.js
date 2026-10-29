@@ -16,6 +16,7 @@
     Settings.init();
     Screensaver.init();
     Weather.start();
+    Prayer.start();
     Home.init();
 
     // Preview only: open a screen directly, e.g. http://localhost:8080/#settings
